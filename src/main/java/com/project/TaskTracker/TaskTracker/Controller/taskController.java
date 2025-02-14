@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -46,5 +47,25 @@ public class taskController {
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<String> updateTask(@PathVariable int id, @RequestBody Tasks tasks){
+        Tasks tasks1 = null;
+
+        try{
+            tasks1 = taskService.updateTask(id, tasks);
+        } catch (IOException e){
+            return new ResponseEntity<>("failed to Update", HttpStatus.BAD_REQUEST);
+        }
+
+        if(tasks1 != null){
+            return new ResponseEntity<>("Task is Updated", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Failed to Update", HttpStatus.BAD_REQUEST);
+    }
+
+
+
 
 }

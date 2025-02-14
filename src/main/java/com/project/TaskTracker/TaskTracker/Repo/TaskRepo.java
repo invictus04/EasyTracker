@@ -22,4 +22,6 @@ public interface TaskRepo extends JpaRepository<Tasks, Integer> {
     @Query("SELECT t FROM Tasks t WHERE t.status = 'In Progress'")
     public List<Tasks> getAllInProgressTasks();
 
+
+
 }
